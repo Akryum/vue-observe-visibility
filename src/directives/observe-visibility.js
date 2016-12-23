@@ -5,7 +5,7 @@ function throwValueError (value) {
 }
 
 export default {
-  bind (el, { value }) {
+  bind (el, { value }, vnode) {
     if (typeof IntersectionObserver === 'undefined') {
       console.warn('[vue-observe-visibility] IntersectionObserver API is not available in your browser. Please install this polyfill: https://github.com/WICG/IntersectionObserver/tree/gh-pages/polyfill')
     } else {
@@ -15,7 +15,10 @@ export default {
         var entry = entries[0]
         el._vue_visibilityCallback(entry.intersectionRatio > 0)
       })
-      observer.observe(el)
+      // Wait for the element to be in document
+      vnode.context.$nextTick(() => {
+        observer.observe(el)
+      })
     }
   },
   update (el, { value }) {
