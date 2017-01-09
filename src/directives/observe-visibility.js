@@ -1,6 +1,6 @@
 function throwValueError (value) {
-  if (typeof value !== 'function') {
-    throw new Error('observer-visible directive expects a function as the value')
+  if (value !== null && typeof value !== 'function') {
+    throw new Error('observe-visibility directive expects a function as the value')
   }
 }
 
@@ -13,7 +13,9 @@ export default {
       el._vue_visibilityCallback = value
       const observer = el._vue_intersectionObserver = new IntersectionObserver(entries => {
         var entry = entries[0]
-        el._vue_visibilityCallback(entry.intersectionRatio > 0)
+        if (el._vue_visibilityCallback) {
+          el._vue_visibilityCallback(entry.intersectionRatio > 0, entry)
+        }
       })
       // Wait for the element to be in document
       vnode.context.$nextTick(() => {

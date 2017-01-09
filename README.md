@@ -100,6 +100,8 @@ Vue.directive('observe-visibility', ObserveVisibility)
 
 The `v-observe-visibility` directive is very easy to use: just pass a function as the value, which will be called whenever the visiblity of the element changes with the arguement being a boolean (`true` means the element is visible on the page, `false` means that it is not).
 
+The second arguement is the corresponding [IntersectionObserverEntry](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry) object.
+
 # Example
 
 ```html
@@ -119,8 +121,9 @@ new Vue({
     isVisible: true
   },
   methods: {
-  	visibilityChanged: function (isVisible) {
+  	visibilityChanged: function (isVisible, entry) {
     	this.isVisible = isVisible
+      console.log(entry)
     }
   }
 })
