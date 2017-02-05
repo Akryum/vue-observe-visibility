@@ -98,9 +98,9 @@ Vue.directive('observe-visibility', ObserveVisibility)
 
 # Usage
 
-The `v-observe-visibility` directive is very easy to use: just pass a function as the value, which will be called whenever the visiblity of the element changes with the arguement being a boolean (`true` means the element is visible on the page, `false` means that it is not).
+The `v-observe-visibility` directive is very easy to use: just pass a function as the value, which will be called whenever the visiblity of the element changes with the argument being a boolean (`true` means the element is visible on the page, `false` means that it is not).
 
-The second arguement is the corresponding [IntersectionObserverEntry](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry) object.
+The second argument is the corresponding [IntersectionObserverEntry](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry) object.
 
 # Example
 
