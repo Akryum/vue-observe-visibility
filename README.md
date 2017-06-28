@@ -121,8 +121,8 @@ new Vue({
     isVisible: true
   },
   methods: {
-  	visibilityChanged: function (isVisible, entry) {
-    	this.isVisible = isVisible
+    visibilityChanged: function (isVisible, entry) {
+      this.isVisible = isVisible
       console.log(entry)
     }
   }
