@@ -1,9 +1,13 @@
 import ObserveVisibility from './directives/observe-visibility'
 
 // Install the components
-function install (Vue) {
+export function install (Vue) {
   Vue.directive('observe-visibility', ObserveVisibility)
   /* -- Add more components here -- */
+}
+
+export {
+  ObserveVisibility,
 }
 
 /* -- Plugin definition & Auto-install -- */
@@ -14,7 +18,6 @@ const plugin = {
   /* eslint-disable no-undef */
   version: VERSION,
   install,
-  ObserveVisibility,
 }
 
 export default plugin
