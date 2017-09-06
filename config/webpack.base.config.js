@@ -1,3 +1,4 @@
+var path = require('path')
 var webpack = require('webpack')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 
@@ -9,7 +10,7 @@ var config = require('../package.json')
 module.exports = {
   entry: './src/index.js',
   output: {
-    path: './dist',
+    path: path.resolve(__dirname, '../dist'),
     filename: outputFile + '.js',
     library: globalName,
     libraryTarget: 'umd',
