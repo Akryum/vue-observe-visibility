@@ -1,7 +1,7 @@
 {
   "name": "vue-observe-visibility",
   "description": "Detect when an element is becoming visible or hidden on the page. ",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "author": {
     "name": "Guillaume Chau",
     "email": "guillaume.b.chau@gmail.com"
@@ -13,7 +13,6 @@
   ],
   "license": "MIT",
   "main": "dist/vue-observe-visibility.js",
-  "module": "index.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack --config config/webpack.dev.config.js --progress --watch",
     "build": "cross-env NODE_ENV=production webpack --config config/webpack.prod.config.js --progress --hide-modules",
