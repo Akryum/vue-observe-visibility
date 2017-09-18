@@ -1,7 +1,7 @@
 {
   "name": "vue-observe-visibility",
   "description": "Detect when an element is becoming visible or hidden on the page. ",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "author": {
     "name": "Guillaume Chau",
     "email": "guillaume.b.chau@gmail.com"
@@ -12,9 +12,9 @@
     "plugin"
   ],
   "license": "MIT",
-  "main": "dist/observe-visibility.umd.js",
-  "module": "dist/observe-visibility.esm.js",
-  "unpkg": "dist/observe-visibility.min.js",
+  "main": "dist/vue-observe-visibility.umd.js",
+  "module": "dist/vue-observe-visibility.esm.js",
+  "unpkg": "dist/vue-observe-visibility.min.js",
   "scripts": {
     "build": "npm run build:browser && npm run build:es && npm run build:umd",
     "build:browser": "rollup --config build/rollup.config.browser.js",
