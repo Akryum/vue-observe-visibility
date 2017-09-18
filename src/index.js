@@ -2,12 +2,12 @@ import ObserveVisibility from './directives/observe-visibility'
 
 // Install the components
 export function install (Vue) {
-  Vue.directive('observe-visibility', ObserveVisibility)
-  /* -- Add more components here -- */
+	Vue.directive('observe-visibility', ObserveVisibility)
+	/* -- Add more components here -- */
 }
 
 export {
-  ObserveVisibility,
+	ObserveVisibility,
 }
 
 /* -- Plugin definition & Auto-install -- */
@@ -15,9 +15,9 @@ export {
 
 // Plugin
 const plugin = {
-  /* eslint-disable no-undef */
-  version: VERSION,
-  install,
+	// eslint-disable-next-line no-undef
+	version: VERSION,
+	install,
 }
 
 export default plugin
@@ -25,10 +25,10 @@ export default plugin
 // Auto-install
 let GlobalVue = null
 if (typeof window !== 'undefined') {
-  GlobalVue = window.Vue
+	GlobalVue = window.Vue
 } else if (typeof global !== 'undefined') {
-  GlobalVue = global.Vue
+	GlobalVue = global.Vue
 }
 if (GlobalVue) {
-  GlobalVue.use(plugin)
+	GlobalVue.use(plugin)
 }

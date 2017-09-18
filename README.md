@@ -39,27 +39,11 @@ import { ObserveVisibility } from 'vue-observe-visibility'
 Vue.directive('observe-visibility', ObserveVisibility)
 ```
 
-## Distribution import
-
-```javascript
-import VueObserveVisibility from 'vue-observe-visibility/dist/vue-observe-visibility'
-
-Vue.use(VueObserveVisibility)
-```
-
- Or:
-
-```javascript
-import { ObserveVisibility } from 'vue-observe-visibility/dist/vue-observe-visibility'
-
-Vue.directive('observe-visibility', ObserveVisibility)
-```
-
 ## Browser
 
 ```html
 <script src="vue.js"></script>
-<script src="vue-observe-visibility/dist/vue-observe-visibility.js"></script>
+<script src="vue-observe-visibility/dist/vue-observe-visibility.min.js"></script>
 ```
 
 The plugin should be auto-installed. If not, you can install it manually with the instructions below.
@@ -74,26 +58,6 @@ Use specific directives:
 
 ```javascript
 Vue.directive('observe-visibility', VueObserveVisibility.ObserveVisibility)
-```
-
-## Source import
-
-Install all the directives:
-
-```javascript
-import Vue from 'vue'
-import VueObserveVisibility from 'vue-observe-visibility/src'
-
-Vue.use(VueObserveVisibility)
-```
-
-Use specific directives:
-
-```javascript
-import Vue from 'vue'
-import { ObserveVisibility } from 'vue-observe-visibility/src'
-
-Vue.directive('observe-visibility', ObserveVisibility)
 ```
 
 # Usage
