@@ -62,9 +62,38 @@ Vue.directive('observe-visibility', VueObserveVisibility.ObserveVisibility)
 
 # Usage
 
-The `v-observe-visibility` directive is very easy to use: just pass a function as the value, which will be called whenever the visiblity of the element changes with the argument being a boolean (`true` means the element is visible on the page, `false` means that it is not).
+The `v-observe-visibility` directive is very easy to use. Just pass a function as the value:
+
+```html
+<div v-observe-visibility="visibilityChanged">
+```
+
+This also works on components:
+
+```html
+<MyComponent v-observe-visibility="visibilityChanged" />
+```
+
+The function will be called whenever the visiblity of the element changes with the argument being a boolean (`true` means the element is visible on the page, `false` means that it is not).
 
 The second argument is the corresponding [IntersectionObserverEntry](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserverEntry) object.
+
+```javascript
+visibilityChanged (isVisible, entry) {
+  this.isVisible = isVisible
+  console.log(entry)
+}
+```
+
+## Passing custom arguments
+
+You can add custom argument by using an intermediate function:
+
+```html
+<div v-observe-visibility="(isVisible, entry) => visibilityChanged(isVisible, entry, customArgument)">
+```
+
+Here `visibilityChanged` will be call with a third custom argument `customArgument`.
 
 # Example
 
@@ -82,14 +111,14 @@ new Vue({
   el: '#app',
   data: {
     show: true,
-    isVisible: true
+    isVisible: true,
   },
   methods: {
-    visibilityChanged: function (isVisible, entry) {
+    visibilityChanged (isVisible, entry) {
       this.isVisible = isVisible
       console.log(entry)
-    }
-  }
+    },
+  },
 })
 </script>
 ```
