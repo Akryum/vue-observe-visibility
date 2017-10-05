@@ -19,9 +19,9 @@ Detect when an element is becoming visible or hidden on the page.
 npm install --save vue-observe-visibility
 ```
 
-**⚠️ This plugin uses the [Intersection Observer API](https://github.com/WICG/IntersectionObserver) that is not currently supported in every browser (Chrome does though). You need to include a [polyfill](https://github.com/WICG/IntersectionObserver/tree/gh-pages/polyfill) to make it work on the incompatible browsers.**
+**⚠️ This plugin uses the [Intersection Observer API](http://caniuse.com/#feat=intersectionobserver) that is not currently supported in every browser (currentyl supported in Edge, Firefox and Chrome). You need to include a [polyfill](https://github.com/WICG/IntersectionObserver/tree/gh-pages/polyfill) to make it work on incompatible browsers.**
 
-## Default import
+## Import
 
 ```javascript
 import Vue from 'vue'
