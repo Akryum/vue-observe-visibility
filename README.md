@@ -85,6 +85,14 @@ visibilityChanged (isVisible, entry) {
 }
 ```
 
+## Throttling visibility
+
+You can pass an argument to directive specifying minimal state duration after which an event will be fired. It's useful when you are tracking visibility while scrolling and don't want events from fastly scrolled out elements
+
+```html
+<div v-observe-visibility:100ms="visibilityChanged">
+```
+
 ## Passing custom arguments
 
 You can add custom argument by using an intermediate function:
