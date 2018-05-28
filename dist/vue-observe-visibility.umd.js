@@ -22,7 +22,8 @@ var ObserveVisibility = {
 			var observer = el._vue_intersectionObserver = new IntersectionObserver(function (entries) {
 				var entry = entries[0];
 				if (el._vue_visibilityCallback) {
-					el._vue_visibilityCallback.call(null, entry.intersectionRatio > 0, entry);
+					// Use isIntersecting if possible because browsers can report isIntersecting as true, but intersectionRatio as 0, when something very slowly enters the viewport.
+					el._vue_visibilityCallback.call(null, entry.isIntersecting || entry.intersectionRatio > 0, entry);
 				}
 			});
 			// Wait for the element to be in document
