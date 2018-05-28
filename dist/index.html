@@ -1,0 +1,138 @@
+<html>
+  <head>
+    <style>
+      body {
+        font-family: sans-serif;
+      }
+
+      #app {
+        padding: 100px;
+      }
+
+      .toolbar {
+        position: fixed;
+        bottom: 12px;
+        left: 0;
+        width: 100%;
+      }
+
+      .toolbar .wrapper {
+        background: white;
+        padding: 12px;
+        border-radius: 3px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.07);
+        display: flex;
+        align-items: center;
+        border: #eee 1px solid;
+      }
+
+      .toolbar .wrapper > *:not(:last-child) {
+        margin-right: 6px;
+      }
+
+      .separator {
+        margin: 0 12px;
+      }
+
+      .info {
+        color: #eee;
+      }
+
+      .test {
+        background: #eee;
+        height: 100%;
+        border-radius: 3px;
+      }
+
+      .info,
+      .test {
+        font-size: 42px;
+      }
+
+      .test-wrapper {
+        margin: 3000px 0;
+        height: 400px;
+      }
+
+      .toolbar,
+      .info,
+      .test {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      input[type="number"] {
+        width: 90px;
+      }
+
+      .number {
+        display: inline-block;
+        width: 40px;
+        font-family: monospace;
+        text-align: center;
+        background: #eee;
+        border-radius: 3px;
+        padding: 4px 0;
+      }
+    </style>
+  </head>
+  <body>
+      <div id="app">
+        <div class="toolbar">
+          <div class="wrapper">
+            <input id="is-visible" type="checkbox" v-model="isVisible" disabled>
+            <label for="is-visible">Is visible?</label>
+            <span class="separator"></span>
+            <button @click="show = !show">Toggle</button>
+            <span class="separator"></span>
+            <label for="throttle">Throttle</label>
+            <input id="throttle" type="number" v-model="throttle" min="0" step="100">
+            <span class="separator"></span>
+            <label for="threshold">Threshold</label>
+            <span class="number">{{ threshold }}</span>
+            <input type="range" v-model="threshold" min="0" max="1" step="0.01">
+          </div>
+        </div>
+
+        <div class="info">Scroll down</div>
+        <div class="test-wrapper">
+          <div
+            v-show="show"
+            ref="test"
+            class="test"
+            v-observe-visibility="{
+              callback: visibilityChanged,
+              throttle,
+              intersection: {
+                threshold,
+              },
+            }"
+          >Hello world!</div>
+        </div>
+      </div>
+
+
+      <script src="https://unpkg.com/vue/dist/vue.js"></script>
+      <script src="vue-observe-visibility.min.js"></script>
+      <script>
+        // App
+        new Vue({
+          el: '#app',
+          data: {
+            show: true,
+            isVisible: true,
+            throttle: 0,
+            threshold: 0,
+          },
+          methods: {
+            visibilityChanged: function (isVisible, entry) {
+              this.isVisible = isVisible
+              console.log(Math.round(entry.intersectionRatio * 100) + '%')
+            }
+          }
+        })
+      </script>
+  </body>
+
+</html>
