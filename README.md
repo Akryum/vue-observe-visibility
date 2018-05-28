@@ -85,12 +85,31 @@ visibilityChanged (isVisible, entry) {
 }
 ```
 
-It's possible to add threshold as an option to the directive. The threshold is a percentage value.
+## IntersectionObserver options
+
+It's possible to pass the [IntersectionObserver `options` object](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/IntersectionObserver#Parameters) using the `intersection` attribute:
 
 ```html
-<div v-observe-visibility.50="visibilityChanged">
+<div v-observe-visibility="{
+  callback: visibilityChanged,
+  intersection: {
+    root: ...,
+    rootMargin: ...,
+    threshold: 0.3,
+  },
+}">
 ```
 
+## Throttling visibility
+
+You can use the `throttle` options (in ms) specifying minimal state duration after which an event will be fired. It's useful when you are tracking visibility while scrolling and don't want events from fastly scrolled out elements.
+
+```html
+<div v-observe-visibility="{
+  callback: visibilityChanged,
+  throttle: 300,
+}">
+```
 
 ## Passing custom arguments
 
