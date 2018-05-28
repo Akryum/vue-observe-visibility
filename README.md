@@ -85,6 +85,13 @@ visibilityChanged (isVisible, entry) {
 }
 ```
 
+It's possible to add threshold as an option to the directive. The threshold is a percentage value.
+
+```html
+<div v-observe-visibility.50="visibilityChanged">
+```
+
+
 ## Passing custom arguments
 
 You can add custom argument by using an intermediate function:
