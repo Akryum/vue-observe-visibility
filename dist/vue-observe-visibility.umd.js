@@ -287,7 +287,7 @@ var VisibilityState = function () {
 	}, {
 		key: 'threshold',
 		get: function get$$1() {
-			return this.options.intersection && this.options.intersection.threshold;
+			return this.options.intersection && this.options.intersection.threshold || 0;
 		}
 	}]);
 	return VisibilityState;
@@ -335,7 +335,7 @@ function install(Vue) {
 // Plugin
 var plugin = {
 	// eslint-disable-next-line no-undef
-	version: "0.4.0",
+	version: "0.4.1",
 	install: install
 };
 
