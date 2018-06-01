@@ -7,6 +7,15 @@ Detect when an element is becoming visible or hidden on the page.
 
 [Demo](https://jsfiddle.net/Akryum/ppt7endj/)
 
+
+<p>
+  <a href="https://www.patreon.com/akryum" target="_blank">
+    <img src="https://c5.patreon.com/external/logo/become_a_patron_button.png" alt="Become a Patreon">
+  </a>
+</p>
+
+<br>
+
 ## Table of contents
 
 - [Installation](#installation)
