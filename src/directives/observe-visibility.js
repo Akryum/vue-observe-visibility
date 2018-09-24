@@ -8,7 +8,10 @@ class VisibilityState {
 	}
 
 	get threshold () {
-		return (this.options.intersection && this.options.intersection.threshold) || 0
+		if (this.options.intersection && this.options.intersection.threshold) {
+			return this.options.intersection.threshold;
+		}
+		return 0;
 	}
 
 	createObserver (options, vnode) {
