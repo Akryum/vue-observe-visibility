@@ -227,6 +227,16 @@ function throttle(callback, delay) {
 	return throttled;
 }
 
+function deepEqual(val1, val2) {
+	if (val1 === val2) return true;
+	for (var key in val1) {
+		if (deepEqual(val1[key], val2[key])) {
+			return true;
+		}
+	}
+	return false;
+}
+
 var VisibilityState = function () {
 	function VisibilityState(el, options, vnode) {
 		classCallCheck(this, VisibilityState);
@@ -253,11 +263,16 @@ var VisibilityState = function () {
 				this.callback = throttle(this.callback, this.options.throttle);
 			}
 
+			this.oldResult = undefined;
+
 			this.observer = new IntersectionObserver(function (entries) {
 				var entry = entries[0];
 				if (_this.callback) {
 					// Use isIntersecting if possible because browsers can report isIntersecting as true, but intersectionRatio as 0, when something very slowly enters the viewport.
-					_this.callback(entry.isIntersecting && entry.intersectionRatio >= _this.threshold, entry);
+					var result = entry.isIntersecting && entry.intersectionRatio >= _this.threshold;
+					if (result === _this.oldResult) return;
+					_this.oldResult = result;
+					_this.callback(result, entry);
 				}
 			}, this.options.intersection);
 
@@ -287,34 +302,42 @@ var VisibilityState = function () {
 	return VisibilityState;
 }();
 
-var ObserveVisibility = {
-	bind: function bind(el, _ref, vnode) {
-		var value = _ref.value;
+function bind(el, _ref, vnode) {
+	var value = _ref.value;
 
-		if (typeof IntersectionObserver === 'undefined') {
-			console.warn('[vue-observe-visibility] IntersectionObserver API is not available in your browser. Please install this polyfill: https://github.com/w3c/IntersectionObserver/tree/master/polyfill');
-		} else {
-			var state = new VisibilityState(el, value, vnode);
-			el._vue_visibilityState = state;
-		}
-	},
-	update: function update(el, _ref2, vnode) {
-		var value = _ref2.value;
-
-		var state = el._vue_visibilityState;
-		if (state) {
-			state.createObserver(value, vnode);
-		} else {
-			this.bind(el, { value: value }, vnode);
-		}
-	},
-	unbind: function unbind(el) {
-		var state = el._vue_visibilityState;
-		if (state) {
-			state.destroyObserver();
-			delete el._vue_visibilityState;
-		}
+	if (typeof IntersectionObserver === 'undefined') {
+		console.warn('[vue-observe-visibility] IntersectionObserver API is not available in your browser. Please install this polyfill: https://github.com/w3c/IntersectionObserver/tree/master/polyfill');
+	} else {
+		var state = new VisibilityState(el, value, vnode);
+		el._vue_visibilityState = state;
 	}
+}
+
+function update(el, _ref2, vnode) {
+	var value = _ref2.value,
+	    oldValue = _ref2.oldValue;
+
+	if (deepEqual(value, oldValue)) return;
+	var state = el._vue_visibilityState;
+	if (state) {
+		state.createObserver(value, vnode);
+	} else {
+		bind(el, { value: value }, vnode);
+	}
+}
+
+function unbind(el) {
+	var state = el._vue_visibilityState;
+	if (state) {
+		state.destroyObserver();
+		delete el._vue_visibilityState;
+	}
+}
+
+var ObserveVisibility = {
+	bind: bind,
+	update: update,
+	unbind: unbind
 };
 
 // Install the components
@@ -329,7 +352,7 @@ function install(Vue) {
 // Plugin
 var plugin = {
 	// eslint-disable-next-line no-undef
-	version: "0.4.1",
+	version: "0.4.2",
 	install: install
 };
 
