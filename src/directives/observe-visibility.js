@@ -1,4 +1,4 @@
-import { processOptions, throttle } from '../utils'
+import { processOptions, throttle, deepEqual } from '../utils'
 
 class VisibilityState {
 	constructor (el, options, vnode) {
@@ -24,11 +24,16 @@ class VisibilityState {
 			this.callback = throttle(this.callback, this.options.throttle)
 		}
 
+		this.oldResult = undefined
+
 		this.observer = new IntersectionObserver(entries => {
 			var entry = entries[0]
 			if (this.callback) {
 				// Use isIntersecting if possible because browsers can report isIntersecting as true, but intersectionRatio as 0, when something very slowly enters the viewport.
-				this.callback(entry.isIntersecting && entry.intersectionRatio >= this.threshold, entry)
+				const result = entry.isIntersecting && entry.intersectionRatio >= this.threshold
+				if (result === this.oldResult) return
+				this.oldResult = result
+				this.callback(result, entry)
 			}
 		}, this.options.intersection)
 
@@ -59,8 +64,9 @@ function bind (el, { value }, vnode) {
   }
 };
 
-function update (el, { value }, vnode) {
-  const state = el._vue_visibilityState
+function update (el, { value, oldValue }, vnode) {
+	if (deepEqual(value, oldValue)) return
+	const state = el._vue_visibilityState
   if (state) {
     state.createObserver(value, vnode)
   } else {
