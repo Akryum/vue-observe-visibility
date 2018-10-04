@@ -109,6 +109,17 @@ It's possible to pass the [IntersectionObserver `options` object](https://develo
 }">
 ```
 
+## Once
+
+It can be useful to listen for when the element is visible only once, for example to build introduction animations. Set the `once` option to `true`:
+
+```html
+<div v-observe-visibility="{
+  callback: visibilityChanged,
+  once: true,
+}">
+```
+
 ## Throttling visibility
 
 You can use the `throttle` options (in ms) specifying minimal state duration after which an event will be fired. It's useful when you are tracking visibility while scrolling and don't want events from fastly scrolled out elements.

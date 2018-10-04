@@ -4,6 +4,7 @@ class VisibilityState {
 	constructor (el, options, vnode) {
 		this.el = el
 		this.observer = null
+		this.frozen = false
 		this.createObserver(options, vnode)
 	}
 
@@ -15,6 +16,8 @@ class VisibilityState {
 		if (this.observer) {
 			this.destroyObserver()
 		}
+
+		if (this.frozen) return
 
 		this.options = processOptions(options)
 
@@ -34,6 +37,10 @@ class VisibilityState {
 				if (result === this.oldResult) return
 				this.oldResult = result
 				this.callback(result, entry)
+				if (result && this.options.once) {
+					this.frozen = true
+					this.destroyObserver()
+				}
 			}
 		}, this.options.intersection)
 
@@ -46,11 +53,13 @@ class VisibilityState {
 	destroyObserver () {
 		if (this.observer) {
 			this.observer.disconnect()
+			this.observer = null
 		}
 
 		// Cancel throttled call
 		if (this.callback && this.callback._clear) {
 			this.callback._clear()
+			this.callback = null
 		}
 	}
 }
