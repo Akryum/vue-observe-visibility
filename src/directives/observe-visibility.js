@@ -50,30 +50,34 @@ class VisibilityState {
 	}
 }
 
+function bind (el, { value }, vnode) {
+  if (typeof IntersectionObserver === 'undefined') {
+    console.warn('[vue-observe-visibility] IntersectionObserver API is not available in your browser. Please install this polyfill: https://github.com/w3c/IntersectionObserver/tree/master/polyfill')
+  } else {
+    const state = new VisibilityState(el, value, vnode)
+    el._vue_visibilityState = state
+  }
+};
+
+function update (el, { value }, vnode) {
+  const state = el._vue_visibilityState
+  if (state) {
+    state.createObserver(value, vnode)
+  } else {
+    bind(el, { value }, vnode)
+  }
+};
+
+function unbind (el) {
+  const state = el._vue_visibilityState
+  if (state) {
+    state.destroyObserver()
+    delete el._vue_visibilityState
+  }
+};
+
 export default {
-	bind (el, { value }, vnode) {
-		if (typeof IntersectionObserver === 'undefined') {
-			console.warn('[vue-observe-visibility] IntersectionObserver API is not available in your browser. Please install this polyfill: https://github.com/w3c/IntersectionObserver/tree/master/polyfill')
-		} else {
-			const state = new VisibilityState(el, value, vnode)
-			el._vue_visibilityState = state
-		}
-	},
-
-	update (el, { value }, vnode) {
-		const state = el._vue_visibilityState
-		if (state) {
-			state.createObserver(value, vnode)
-		} else {
-			this.bind(el, { value }, vnode)
-		}
-	},
-
-	unbind (el) {
-		const state = el._vue_visibilityState
-		if (state) {
-			state.destroyObserver()
-			delete el._vue_visibilityState
-		}
-	},
+	bind,
+	update,
+	unbind,
 }
