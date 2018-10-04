@@ -51,12 +51,9 @@
     "rollup-plugin-babel": "^3.0.2",
     "rollup-plugin-commonjs": "^8.2.0",
     "rollup-plugin-css-only": "^0.2.0",
-    "rollup-plugin-css-porter": "^0.1.2",
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-replace": "^2.0.0",
-    "rollup-plugin-stylus-css-modules": "^1.5.0",
     "rollup-plugin-uglify": "^2.0.1",
-    "rollup-plugin-vue": "^2.4.1",
     "serve": "^6.5.8",
     "uglify-es": "^3.0.28"
   }

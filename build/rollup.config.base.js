@@ -1,6 +1,5 @@
 import babel from 'rollup-plugin-babel'
 import resolve from 'rollup-plugin-node-resolve'
-import vue from 'rollup-plugin-vue'
 import cjs from 'rollup-plugin-commonjs'
 import replace from 'rollup-plugin-replace'
 
@@ -16,9 +15,6 @@ export default {
 			browser: true,
 		}),
 		cjs(),
-		vue({
-			css: 'dist/vue-observe-visibility.css',
-		}),
 		babel({
 			exclude: 'node_modules/**',
 			'plugins': [
