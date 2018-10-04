@@ -1,3 +1,13 @@
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
+  return typeof obj;
+} : function (obj) {
+  return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+};
+
+
+
+
+
 var asyncGenerator = function () {
   function AwaitValue(value) {
     this.value = value;
@@ -229,10 +239,13 @@ function throttle(callback, delay) {
 
 function deepEqual(val1, val2) {
 	if (val1 === val2) return true;
-	for (var key in val1) {
-		if (deepEqual(val1[key], val2[key])) {
-			return true;
+	if ((typeof val1 === 'undefined' ? 'undefined' : _typeof(val1)) === 'object') {
+		for (var key in val1) {
+			if (!deepEqual(val1[key], val2[key])) {
+				return false;
+			}
 		}
+		return true;
 	}
 	return false;
 }
@@ -243,6 +256,7 @@ var VisibilityState = function () {
 
 		this.el = el;
 		this.observer = null;
+		this.frozen = false;
 		this.createObserver(options, vnode);
 	}
 
@@ -254,6 +268,8 @@ var VisibilityState = function () {
 			if (this.observer) {
 				this.destroyObserver();
 			}
+
+			if (this.frozen) return;
 
 			this.options = processOptions(options);
 
@@ -273,6 +289,10 @@ var VisibilityState = function () {
 					if (result === _this.oldResult) return;
 					_this.oldResult = result;
 					_this.callback(result, entry);
+					if (result && _this.options.once) {
+						_this.frozen = true;
+						_this.destroyObserver();
+					}
 				}
 			}, this.options.intersection);
 
@@ -286,11 +306,13 @@ var VisibilityState = function () {
 		value: function destroyObserver() {
 			if (this.observer) {
 				this.observer.disconnect();
+				this.observer = null;
 			}
 
 			// Cancel throttled call
 			if (this.callback && this.callback._clear) {
 				this.callback._clear();
+				this.callback = null;
 			}
 		}
 	}, {
@@ -352,7 +374,7 @@ function install(Vue) {
 // Plugin
 var plugin = {
 	// eslint-disable-next-line no-undef
-	version: "0.4.2",
+	version: "0.4.3",
 	install: install
 };
 
