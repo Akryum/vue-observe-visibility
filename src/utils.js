@@ -34,10 +34,13 @@ export function throttle (callback, delay) {
 
 export function deepEqual (val1, val2) {
 	if (val1 === val2) return true
-	for (const key in val1) {
-		if (deepEqual(val1[key], val2[key])) {
-			return true
+	if (typeof val1 === 'object') {
+		for (const key in val1) {
+			if (!deepEqual(val1[key], val2[key])) {
+				return false
+			}
 		}
+		return true
 	}
 	return false
 }
