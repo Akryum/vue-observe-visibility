@@ -42,6 +42,7 @@
         background: #eee;
         height: 100%;
         border-radius: 3px;
+        flex-direction: column;
       }
 
       .info,
@@ -108,7 +109,9 @@
                 threshold,
               },
             }"
-          >Hello world!</div>
+          >
+            <div v-for="n in count">Hello world!</div>
+          </div>
         </div>
       </div>
 
@@ -124,11 +127,13 @@
             isVisible: true,
             throttle: 0,
             threshold: 0,
+            count: 1,
           },
           methods: {
             visibilityChanged: function (isVisible, entry) {
               this.isVisible = isVisible
-              console.log(Math.round(entry.intersectionRatio * 100) + '%')
+              this.count++
+              console.log('is visible:', isVisible, 'intersection:', Math.round(entry.intersectionRatio * 100) + '%')
             }
           }
         })
