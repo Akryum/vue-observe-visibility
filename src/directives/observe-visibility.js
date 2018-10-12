@@ -69,7 +69,7 @@ function bind (el, { value }, vnode) {
 		console.warn(
 			'[vue-observe-visibility] IntersectionObserver API is not available in your browser. Please install this polyfill: https://github.com/w3c/IntersectionObserver/tree/master/polyfill'
 		)
-	} else {
+	} else if (value) {
 		const state = new VisibilityState(el, value, vnode)
 		el._vue_visibilityState = state
 	}
