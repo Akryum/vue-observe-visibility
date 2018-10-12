@@ -340,7 +340,9 @@ function update(el, _ref2, vnode) {
 	    oldValue = _ref2.oldValue;
 
 	if (deepEqual(value, oldValue)) return;
-	console.log(value, oldValue);
+	if (oldValue && !value) {
+		unbind(el);
+	}
 	var state = el._vue_visibilityState;
 	if (state) {
 		state.createObserver(value, vnode);
