@@ -77,7 +77,9 @@ function bind (el, { value }, vnode) {
 
 function update (el, { value, oldValue }, vnode) {
 	if (deepEqual(value, oldValue)) return
-	console.log(value, oldValue)
+	if (oldValue && !value) {
+		unbind(el)
+	}
 	const state = el._vue_visibilityState
 	if (state) {
 		state.createObserver(value, vnode)
