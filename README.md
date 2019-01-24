@@ -27,8 +27,8 @@ Detect when an element is becoming visible or hidden on the page.
 ### Bronze
 
 <p align="center">
-  <a href="https://vuetifyjs.com" target="_blank" title="Vuetify">
-    <img src="https://cdn.vuetifyjs.com/images/logos/v-alt.svg" width="48" height="48">
+  <a href="https://vuetifyjs.com" target="_blank">
+    <img src="https://cdn.discordapp.com/attachments/537832759985700914/537832771691872267/Horizontal_Logo_-_Dark.png" width="100">
   </a>
 </p>
 
