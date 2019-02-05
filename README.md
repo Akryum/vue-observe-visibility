@@ -1,5 +1,7 @@
 # vue-observe-visibility
 
+
+
 [![npm](https://img.shields.io/npm/v/vue-observe-visibility.svg) ![npm](https://img.shields.io/npm/dm/vue-observe-visibility.svg)](https://www.npmjs.com/package/vue-observe-visibility)
 [![vue2](https://img.shields.io/badge/vue-2.x-brightgreen.svg)](https://vuejs.org/)
 
@@ -41,6 +43,16 @@ Detect when an element is becoming visible or hidden on the page.
 - [Example](#example)
 
 # Installation
+
+> This is a fork that fixes some issues
+
+### My forked version
+
+```
+npm install --save @roboncode/vue-observe-visibility
+```
+
+### Original
 
 ```
 npm install --save vue-observe-visibility
