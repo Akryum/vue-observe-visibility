@@ -1,7 +1,7 @@
 {
-  "name": "vue-observe-visibility",
+  "name": "@roboncode/vue-observe-visibility",
   "description": "Detect when an element is becoming visible or hidden on the page. ",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "author": {
     "name": "Guillaume Chau",
     "email": "guillaume.b.chau@gmail.com"
