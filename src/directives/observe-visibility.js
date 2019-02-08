@@ -46,8 +46,9 @@ class VisibilityState {
 
 		// Wait for the element to be in document
 		vnode.context.$nextTick(() => {
-			if (this.observer) this.observer.observe(this.el)
-			else this.destroyObserver()
+			if (this.observer) {
+				this.observer.observe(this.el)
+			}
 		})
 	}
 
