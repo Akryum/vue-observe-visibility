@@ -21,7 +21,13 @@ class VisibilityState {
 
 		this.options = processOptions(options)
 
-		this.callback = this.options.callback
+		this.callback = (result, entry) => {
+			this.options.callback(result, entry)
+			if (result && this.options.once) {
+				this.frozen = true
+				this.destroyObserver()
+			}
+		}
 		// Throttle
 		if (this.callback && this.options.throttle) {
 			this.callback = throttle(this.callback, this.options.throttle)
@@ -37,10 +43,6 @@ class VisibilityState {
 				if (result === this.oldResult) return
 				this.oldResult = result
 				this.callback(result, entry)
-				if (result && this.options.once) {
-					this.frozen = true
-					this.destroyObserver()
-				}
 			}
 		}, this.options.intersection)
 
