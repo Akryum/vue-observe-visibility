@@ -1,15 +1,15 @@
 import base from './rollup.config.base'
-import uglify from 'rollup-plugin-uglify'
-import { minify } from 'uglify-es'
+import { terser } from 'rollup-plugin-terser'
 
 const config = Object.assign({}, base, {
 	output: {
+		exports: 'named',
+		name: 'VueObserveVisibility',
 		file: 'dist/vue-observe-visibility.min.js',
 		format: 'iife',
 	},
-	name: 'VueObserveVisibility',
 })
 
-config.plugins.push(uglify({}, minify))
+config.plugins.push(terser())
 
 export default config
