@@ -1,5 +1,5 @@
 <p align="center">
-<img src="./logo.png" width="366" height="219" alt="vue-observe-visibility logo"/>
+<img src="./logo.png" alt="vue-observe-visibility logo"/>
 </p>
 
 <h1 align="center">vue-observe-visibility</h1>
