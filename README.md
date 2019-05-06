@@ -175,6 +175,18 @@ You can add custom argument by using an intermediate function:
 
 Here `visibilityChanged` will be call with a third custom argument `customArgument`.
 
+## Disabling the observer
+
+Passing a falsy value to the directive will disable the observer:
+
+```html
+<div
+  v-for="(item, index) of items"
+  :key="item.id"
+  v-observe-visibility="index === items.length - 1 ? visibilityChanged : false"
+>
+```
+
 # Example
 
 ```html

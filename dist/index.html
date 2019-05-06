@@ -84,6 +84,8 @@
           <div class="wrapper">
             <input id="is-visible" type="checkbox" v-model="isVisible" disabled>
             <label for="is-visible">Is visible?</label>
+            <input id="disabled" type="checkbox" v-model="disabled">
+            <label for="disabled">Disable</label>
             <span class="separator"></span>
             <button @click="show = !show">Toggle</button>
             <span class="separator"></span>
@@ -104,7 +106,7 @@
             v-show="show"
             ref="test"
             class="test"
-            v-observe-visibility="{
+            v-observe-visibility="disabled ? false : {
               callback: visibilityChanged,
               throttle,
               intersection: {
@@ -132,6 +134,7 @@
             threshold: 0,
             count: 1,
             once: false,
+            disabled: false,
           },
           methods: {
             visibilityChanged: function (isVisible, entry) {

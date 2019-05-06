@@ -67,6 +67,7 @@ class VisibilityState {
 }
 
 function bind (el, { value }, vnode) {
+	if (!value) return
 	if (typeof IntersectionObserver === 'undefined') {
 		console.warn('[vue-observe-visibility] IntersectionObserver API is not available in your browser. Please install this polyfill: https://github.com/w3c/IntersectionObserver/tree/master/polyfill')
 	} else {
@@ -78,6 +79,10 @@ function bind (el, { value }, vnode) {
 function update (el, { value, oldValue }, vnode) {
 	if (deepEqual(value, oldValue)) return
 	const state = el._vue_visibilityState
+	if (!value) {
+		unbind(el)
+		return
+	}
 	if (state) {
 		state.createObserver(value, vnode)
 	} else {
