@@ -1,12 +1,29 @@
-# vue-observe-visibility
+<p align="center">
+<img src="./logo.png" width="279" height="208" alt="vue-observe-visibility logo"/>
+</p>
+
+<h1 align="center">vue-observe-visibility</h1>
+
+<p align="center">
 
 [![npm](https://img.shields.io/npm/v/vue-observe-visibility.svg) ![npm](https://img.shields.io/npm/dm/vue-observe-visibility.svg)](https://www.npmjs.com/package/vue-observe-visibility)
 [![vue2](https://img.shields.io/badge/vue-2.x-brightgreen.svg)](https://vuejs.org/)
+
+</p>
+
+<p align="center">
 
 Detect when an element is becoming visible or hidden on the page.
 
 [Demo](https://jsfiddle.net/Akryum/ppt7endj/)
 
+</p>
+
+<p align="center">
+  <a href="https://www.patreon.com/akryum" target="_blank">
+    <img src="https://c5.patreon.com/external/logo/become_a_patron_button.png" alt="Become a Patreon">
+  </a>
+</p>
 
 <p>
   <a href="https://www.patreon.com/akryum" target="_blank">
