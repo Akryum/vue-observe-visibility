@@ -154,6 +154,16 @@ function () {
       this.observer = new IntersectionObserver(function (entries) {
         var entry = entries[0];
 
+        if (entries.length > 1) {
+          var intersectingEntry = entries.find(function (e) {
+            return e.isIntersecting;
+          });
+
+          if (intersectingEntry) {
+            entry = intersectingEntry;
+          }
+        }
+
         if (_this.callback) {
           // Use isIntersecting if possible because browsers can report isIntersecting as true, but intersectionRatio as 0, when something very slowly enters the viewport.
           var result = entry.isIntersecting && entry.intersectionRatio >= _this.threshold;
