@@ -84,14 +84,26 @@
           <div class="wrapper">
             <input id="is-visible" type="checkbox" v-model="isVisible" disabled>
             <label for="is-visible">Is visible?</label>
+
             <input id="disabled" type="checkbox" v-model="disabled">
             <label for="disabled">Disable</label>
+
             <span class="separator"></span>
+
             <button @click="show = !show">Toggle</button>
+
             <span class="separator"></span>
+
             <label for="throttle">Throttle</label>
             <input id="throttle" type="number" v-model="throttle" min="0" step="100">
+
+            <input id="throttle-leading-visible" type="checkbox" v-model="leadingVisible">
+            <label for="throttle-leading-visible">Leading (Visible)</label>
+            <input id="throttle-leading-hidden" type="checkbox" v-model="leadingHidden">
+            <label for="throttle-leading-hidden">Leading (Hidden)</label>
+
             <span class="separator"></span>
+
             <label for="threshold">Threshold</label>
             <span class="number">{{ threshold }}</span>
             <input type="range" v-model="threshold" min="0" max="1" step="0.01">
@@ -109,6 +121,9 @@
             v-observe-visibility="disabled ? false : {
               callback: visibilityChanged,
               throttle,
+              throttleOptions: {
+                leading: leadingVisible && leadingHidden ? 'both' : leadingVisible ? 'visible' : leadingHidden ? 'hidden' : false,
+              },
               intersection: {
                 threshold,
               },
@@ -131,6 +146,8 @@
             show: true,
             isVisible: true,
             throttle: 0,
+            leadingVisible: false,
+            leadingHidden: false,
             threshold: 0,
             count: 1,
             once: false,

@@ -169,6 +169,19 @@ You can use the `throttle` options (in ms) specifying minimal state duration aft
 }">
 ```
 
+You can also pass a `leading` option to trigger the callback the first time when the visibility changes without waiting for the throttle delay.
+I can either be `visible`, `hidden` or `both`.
+
+```html
+<div v-observe-visibility="{
+  callback: visibilityChanged,
+  throttle: 300,
+  throttleOptions: {
+    leading: 'visible',
+  },
+}">
+```
+
 ## Passing custom arguments
 
 You can add custom argument by using an intermediate function:

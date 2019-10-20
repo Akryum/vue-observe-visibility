@@ -30,7 +30,12 @@ class VisibilityState {
 		}
 		// Throttle
 		if (this.callback && this.options.throttle) {
-			this.callback = throttle(this.callback, this.options.throttle)
+			const { leading } = this.options.throttleOptions
+			this.callback = throttle(this.callback, this.options.throttle, {
+				leading: (state) => {
+					return leading === 'both' || (leading === 'visible' && state) || (leading === 'hidden' && !state)
+				},
+			})
 		}
 
 		this.oldResult = undefined
