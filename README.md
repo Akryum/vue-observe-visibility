@@ -90,7 +90,7 @@ Vue.directive('observe-visibility', ObserveVisibility)
 
 ```html
 <script src="vue.js"></script>
-<script src="vue-observe-visibility/dist/vue-observe-visibility.min.js"></script>
+<script src="https://unpkg.com/vue-observe-visibility/dist/vue-observe-visibility.min.js"></script>
 ```
 
 The plugin should be auto-installed. If not, you can install it manually with the instructions below.
