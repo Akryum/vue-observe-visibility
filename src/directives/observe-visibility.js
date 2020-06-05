@@ -1,115 +1,130 @@
-import { processOptions, throttle, deepEqual } from '../utils'
+import { processOptions, throttle, deepEqual } from "../utils";
 
 class VisibilityState {
-	constructor (el, options, vnode) {
-		this.el = el
-		this.observer = null
-		this.frozen = false
-		this.createObserver(options, vnode)
+	constructor(el, options, vnode) {
+		this.el = el;
+		this.observer = null;
+		this.frozen = false;
+		this.createObserver(options, vnode);
 	}
 
-	get threshold () {
-		return (this.options.intersection && this.options.intersection.threshold) || 0
+	get threshold() {
+		return (
+			(this.options.intersection && this.options.intersection.threshold) || 0
+		);
 	}
 
-	createObserver (options, vnode) {
+	createObserver(options, vnode) {
 		if (this.observer) {
-			this.destroyObserver()
+			this.destroyObserver();
 		}
 
-		if (this.frozen) return
+		if (this.frozen) return;
 
-		this.options = processOptions(options)
+		this.options = processOptions(options);
 
 		this.callback = (result, entry) => {
-			this.options.callback(result, entry)
+			this.options.callback(result, entry);
 			if (result && this.options.once) {
-				this.frozen = true
-				this.destroyObserver()
+				this.frozen = true;
+				this.destroyObserver();
 			}
-		}
+		};
 		// Throttle
 		if (this.callback && this.options.throttle) {
-			const { leading } = this.options.throttleOptions || {}
+			const { leading } = this.options.throttleOptions || {};
 			this.callback = throttle(this.callback, this.options.throttle, {
 				leading: (state) => {
-					return leading === 'both' || (leading === 'visible' && state) || (leading === 'hidden' && !state)
+					return (
+						leading === "both" ||
+						(leading === "visible" && state) ||
+						(leading === "hidden" && !state)
+					);
 				},
-			})
+			});
 		}
 
-		this.oldResult = undefined
+		this.oldResult = undefined;
 
-		this.observer = new IntersectionObserver(entries => {
-			let entry = entries[0]
+		this.observer = new IntersectionObserver((entries) => {
+			let entry = entries[0];
 
 			if (entries.length > 1) {
-				const intersectingEntry = entries.find(e => e.isIntersecting)
+				const intersectingEntry = entries.find((e) => e.isIntersecting);
 				if (intersectingEntry) {
-					entry = intersectingEntry
+					entry = intersectingEntry;
 				}
 			}
 
 			if (this.callback) {
+				if (typeof this.threshold !== "number") {
+					const result = entry.isIntersecting;
+					this.oldResult = result;
+					this.callback(result, entry);
+					return;
+				}
 				// Use isIntersecting if possible because browsers can report isIntersecting as true, but intersectionRatio as 0, when something very slowly enters the viewport.
-				const result = entry.isIntersecting && entry.intersectionRatio >= this.threshold
-				if (result === this.oldResult) return
-				this.oldResult = result
-				this.callback(result, entry)
+				const result =
+					entry.isIntersecting && entry.intersectionRatio >= this.threshold;
+				if (result === this.oldResult) return;
+				this.oldResult = result;
+				this.callback(result, entry);
 			}
-		}, this.options.intersection)
+		}, this.options.intersection);
 
 		// Wait for the element to be in document
 		vnode.context.$nextTick(() => {
 			if (this.observer) {
-				this.observer.observe(this.el)
+				this.observer.observe(this.el);
 			}
-		})
+		});
 	}
 
-	destroyObserver () {
+	destroyObserver() {
 		if (this.observer) {
-			this.observer.disconnect()
-			this.observer = null
+			this.observer.disconnect();
+			this.observer = null;
 		}
 
 		// Cancel throttled call
 		if (this.callback && this.callback._clear) {
-			this.callback._clear()
-			this.callback = null
+			this.callback._clear();
+			this.callback = null;
 		}
 	}
 }
 
-function bind (el, { value }, vnode) {
-	if (!value) return
-	if (typeof IntersectionObserver === 'undefined') {
-		console.warn('[vue-observe-visibility] IntersectionObserver API is not available in your browser. Please install this polyfill: https://github.com/w3c/IntersectionObserver/tree/master/polyfill')
+function bind(el, { value }, vnode) {
+	if (!value) return;
+	if (typeof IntersectionObserver === "undefined") {
+		console.warn(
+			"[vue-observe-visibility] IntersectionObserver API is not available in your browser. Please install this polyfill: https://github.com/w3c/IntersectionObserver/tree/master/polyfill"
+		);
 	} else {
-		const state = new VisibilityState(el, value, vnode)
-		el._vue_visibilityState = state
+		const state = new VisibilityState(el, value, vnode);
+		el._vue_visibilityState = state;
 	}
 }
 
-function update (el, { value, oldValue }, vnode) {
-	if (deepEqual(value, oldValue)) return
-	const state = el._vue_visibilityState
+function update(el, { value, oldValue }, vnode) {
+	if (deepEqual(value, oldValue)) return;
+	const state = el._vue_visibilityState;
 	if (!value) {
-		unbind(el)
-		return
+		unbind(el);
+		return;
 	}
 	if (state) {
-		state.createObserver(value, vnode)
+		state.createObserver(value, vnode);
 	} else {
-		bind(el, { value }, vnode)
+		bind(el, { value }, vnode);
 	}
 }
 
-function unbind (el) {
-	const state = el._vue_visibilityState
+function unbind(el) {
+	const state = el._vue_visibilityState;
 	if (state) {
-		state.destroyObserver()
-		delete el._vue_visibilityState
+		state.destroyObserver();
+		delete el._vue_visibilityState;
 	}
 }
 
@@ -117,4 +132,4 @@ export default {
 	bind,
 	update,
 	unbind,
-}
+};
