@@ -1,3 +1,4 @@
+import { nextTick } from 'vue'
 import { processOptions, throttle, deepEqual } from '../utils'
 
 class VisibilityState {
@@ -60,7 +61,7 @@ class VisibilityState {
 		}, this.options.intersection)
 
 		// Wait for the element to be in document
-		vnode.context.$nextTick(() => {
+		nextTick(() => {
 			if (this.observer) {
 				this.observer.observe(this.el)
 			}
@@ -81,7 +82,7 @@ class VisibilityState {
 	}
 }
 
-function bind (el, { value }, vnode) {
+function beforeMount (el, { value }, vnode) {
 	if (!value) return
 	if (typeof IntersectionObserver === 'undefined') {
 		console.warn('[vue-observe-visibility] IntersectionObserver API is not available in your browser. Please install this polyfill: https://github.com/w3c/IntersectionObserver/tree/master/polyfill')
@@ -91,21 +92,21 @@ function bind (el, { value }, vnode) {
 	}
 }
 
-function update (el, { value, oldValue }, vnode) {
+function updated (el, { value, oldValue }, vnode) {
 	if (deepEqual(value, oldValue)) return
 	const state = el._vue_visibilityState
 	if (!value) {
-		unbind(el)
+		unmounted(el)
 		return
 	}
 	if (state) {
 		state.createObserver(value, vnode)
 	} else {
-		bind(el, { value }, vnode)
+		beforeMount(el, { value }, vnode)
 	}
 }
 
-function unbind (el) {
+function unmounted (el) {
 	const state = el._vue_visibilityState
 	if (state) {
 		state.destroyObserver()
@@ -114,7 +115,7 @@ function unbind (el) {
 }
 
 export default {
-	bind,
-	update,
-	unbind,
+	beforeMount,
+	updated,
+	unmounted,
 }

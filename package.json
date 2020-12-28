@@ -36,6 +36,9 @@
     "url": "https://github.com/Akryum/vue-observe-visibility/issues"
   },
   "homepage": "https://github.com/Akryum/vue-observe-visibility#readme",
+  "peerDependencies": {
+    "vue": "^3.0.0"
+  },
   "devDependencies": {
     "@babel/core": "^7.4.0",
     "@babel/plugin-transform-runtime": "^7.4.0",

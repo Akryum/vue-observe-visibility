@@ -136,22 +136,23 @@
       </div>
 
 
-      <script src="https://unpkg.com/vue@2.6.12/dist/vue.js"></script>
+      <script src="https://unpkg.com/vue@3.0.4/dist/vue.global.js"></script>
       <script src="./dist/vue-observe-visibility.min.js"></script>
       <script>
         // App
-        new Vue({
-          el: '#app',
-          data: {
-            show: true,
-            isVisible: true,
-            throttle: 0,
-            leadingVisible: false,
-            leadingHidden: false,
-            threshold: 0,
-            count: 1,
-            once: false,
-            disabled: false,
+        const app = Vue.createApp({
+          data () {
+            return {
+              show: true,
+              isVisible: true,
+              throttle: 0,
+              leadingVisible: false,
+              leadingHidden: false,
+              threshold: 0,
+              count: 1,
+              once: false,
+              disabled: false,
+            }
           },
           methods: {
             visibilityChanged: function (isVisible, entry) {
@@ -161,6 +162,10 @@
             }
           }
         })
+
+        app.use(VueObserveVisibility)
+
+        app.mount('#app')
       </script>
   </body>
 

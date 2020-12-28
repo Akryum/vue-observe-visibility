@@ -1,8 +1,8 @@
 import ObserveVisibility from './directives/observe-visibility'
 
 // Install the components
-export function install (Vue) {
-	Vue.directive('observe-visibility', ObserveVisibility)
+export function install (app) {
+	app.directive('observe-visibility', ObserveVisibility)
 	/* -- Add more components here -- */
 }
 
@@ -21,14 +21,3 @@ const plugin = {
 }
 
 export default plugin
-
-// Auto-install
-let GlobalVue = null
-if (typeof window !== 'undefined') {
-	GlobalVue = window.Vue
-} else if (typeof global !== 'undefined') {
-	GlobalVue = global.Vue
-}
-if (GlobalVue) {
-	GlobalVue.use(plugin)
-}
