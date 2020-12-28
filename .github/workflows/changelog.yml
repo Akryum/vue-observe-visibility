@@ -27,12 +27,12 @@ jobs:
 
       - name: Conventional Changelog Action
         id: changelog
-        uses: TriPSs/conventional-changelog-action@v3
+        uses: Akryum/conventional-changelog-action@v3
         with:
           github-token: ${{ secrets.github_token }}
           output-file: "false"
           skip-commit: "true"
-          skip-version-file: "true"
+          skip-bump: "true"
           version-file: "./package.json"
 
       - name: Create Release
