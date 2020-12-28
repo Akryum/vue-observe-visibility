@@ -31,7 +31,6 @@ jobs:
         with:
           github-token: ${{ secrets.github_token }}
           output-file: "false"
-          skip-commit: "true"
           skip-bump: "true"
           version-file: "./package.json"
 
