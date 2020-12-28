@@ -64,7 +64,7 @@ jobs:
     # Runs a set of commands using the runners shell
     - name: E2E tests
       run: |
-        yarn run test:e2e
+        yarn run test
 
     - uses: actions/upload-artifact@v1
       with:
