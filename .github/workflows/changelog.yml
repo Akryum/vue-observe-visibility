@@ -32,6 +32,7 @@ jobs:
           github-token: ${{ secrets.github_token }}
           output-file: "false"
           skip-commit: "true"
+          skip-version-file: "true"
           version-file: "./package.json"
 
       - name: Create Release
