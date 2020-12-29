@@ -33,7 +33,7 @@ Detect when an element is becoming visible or hidden on the page. <a href="https
 # Installation
 
 ```
-npm install --save vue-observe-visibility
+npm install --save vue-observe-visibility@next
 ```
 
 **⚠️ This plugin uses the [Intersection Observer API](http://caniuse.com/#feat=intersectionobserver) that is not supported in every browser (currently supported in Edge, Firefox and Chrome). You need to include a [polyfill](https://github.com/w3c/IntersectionObserver/tree/master/polyfill) to make it work on incompatible browsers.**
@@ -58,7 +58,7 @@ app.directive('observe-visibility', ObserveVisibility)
 
 ```html
 <script src="vue.js"></script>
-<script src="https://unpkg.com/vue-observe-visibility/dist/vue-observe-visibility.min.js"></script>
+<script src="https://unpkg.com/vue-observe-visibility@next/dist/vue-observe-visibility.min.js"></script>
 ```
 
 Install all the directives:
