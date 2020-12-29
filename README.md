@@ -41,19 +41,17 @@ npm install --save vue-observe-visibility
 ## Import
 
 ```javascript
-import Vue from 'vue'
 import VueObserveVisibility from 'vue-observe-visibility'
 
-Vue.use(VueObserveVisibility)
+app.use(VueObserveVisibility)
 ```
 
 Or:
 
 ```javascript
-import Vue from 'vue'
 import { ObserveVisibility } from 'vue-observe-visibility'
 
-Vue.directive('observe-visibility', ObserveVisibility)
+app.directive('observe-visibility', ObserveVisibility)
 ```
 
 ## Browser
@@ -63,18 +61,16 @@ Vue.directive('observe-visibility', ObserveVisibility)
 <script src="https://unpkg.com/vue-observe-visibility/dist/vue-observe-visibility.min.js"></script>
 ```
 
-The plugin should be auto-installed. If not, you can install it manually with the instructions below.
-
 Install all the directives:
 
 ```javascript
-Vue.use(VueObserveVisibility)
+app.use(VueObserveVisibility)
 ```
 
 Use specific directives:
 
 ```javascript
-Vue.directive('observe-visibility', VueObserveVisibility.ObserveVisibility)
+app.directive('observe-visibility', VueObserveVisibility.ObserveVisibility)
 ```
 
 # Usage
@@ -186,8 +182,7 @@ Passing a falsy value to the directive will disable the observer:
 </div>
 
 <script>
-new Vue({
-  el: '#app',
+const app = Vue.createApp({
   data: {
     show: true,
     isVisible: true,
@@ -199,6 +194,10 @@ new Vue({
     },
   },
 })
+
+app.use(VueObserveVisibility)
+
+app.mount('#app')
 </script>
 ```
 
