@@ -77,6 +77,18 @@ Use specific directives:
 Vue.directive('observe-visibility', VueObserveVisibility.ObserveVisibility)
 ```
 
+## Nuxt.js
+
+Add `vue-observe-visibility/nuxt` to the modules section of `nuxt.config.js`
+
+```js
+{
+    modules: [
+        'vue-observe-visibility/nuxt'
+    ]
+}
+```
+
 # Usage
 
 The `v-observe-visibility` directive is very easy to use. Just pass a function as the value:
