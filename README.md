@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-Detect when an element is becoming visible or hidden on the page. <a href="https://jsfiddle.net/Akryum/ppt7endj/">Demo</a>
+Detect when an element is becoming visible or hidden on the page. <a href="https://jsfiddle.net/AsimTahir/857wubhz/61/">Demo</a>
 </p>
 
 <p align="center">
@@ -178,7 +178,7 @@ Passing a falsy value to the directive will disable the observer:
 
 ```html
 <div id="app">
-  <button @click="show = !show">Toggle</button>
+  <button @click="toggleShow">Toggle</button>
   <label>
     <input type="checkbox" v-model="isVisible" disabled/> Is visible?
   </label>
@@ -186,19 +186,42 @@ Passing a falsy value to the directive will disable the observer:
 </div>
 
 <script>
-new Vue({
-  el: '#app',
-  data: {
-    show: true,
-    isVisible: true,
-  },
-  methods: {
-    visibilityChanged (isVisible, entry) {
-      this.isVisible = isVisible
-      console.log(entry)
-    },
-  },
+const {
+  ref,
+  createApp,
+  defineComponent
+} = Vue;
+
+const {
+  useToggle
+} = window.VueUse;
+
+const App = defineComponent({
+  name: "App",
+  setup() {
+    const _isVisible = ref(false);
+    const throttle = ref(0);
+    const threshold = ref(0);
+
+    const [show, toggleShow] = useToggle(true);
+
+    function visibilityChanged(isVisible, entry) {
+      _isVisible.value = isVisible;
+      console.log(Math.round(entry.intersectionRatio * 100) + '%')
+    }
+
+    return {
+      show,
+      toggleShow,
+      isVisible: _isVisible,
+      throttle,
+      threshold,
+      visibilityChanged
+    }
+  }
 })
+
+createApp(App).use(VueObserveVisibility).mount("#app");
 </script>
 ```
 
