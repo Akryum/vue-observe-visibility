@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-Detect when an element is becoming visible or hidden on the page. <a href="https://jsfiddle.net/Akryum/ppt7endj/">Demo</a>
+Detect when an element is becoming visible or hidden on the page. <a href="https://jsfiddle.net/AsimTahir/857wubhz/61/">Demo</a>
 </p>
 
 <p align="center">
@@ -33,7 +33,7 @@ Detect when an element is becoming visible or hidden on the page. <a href="https
 # Installation
 
 ```
-npm install --save vue-observe-visibility@next
+npm install --save vue-observe-visibility
 ```
 
 **⚠️ This plugin uses the [Intersection Observer API](http://caniuse.com/#feat=intersectionobserver) that is not supported in every browser (currently supported in Edge, Firefox and Chrome). You need to include a [polyfill](https://github.com/w3c/IntersectionObserver/tree/master/polyfill) to make it work on incompatible browsers.**
@@ -41,36 +41,40 @@ npm install --save vue-observe-visibility@next
 ## Import
 
 ```javascript
+import Vue from 'vue'
 import VueObserveVisibility from 'vue-observe-visibility'
 
-app.use(VueObserveVisibility)
+Vue.use(VueObserveVisibility)
 ```
 
 Or:
 
 ```javascript
+import Vue from 'vue'
 import { ObserveVisibility } from 'vue-observe-visibility'
 
-app.directive('observe-visibility', ObserveVisibility)
+Vue.directive('observe-visibility', ObserveVisibility)
 ```
 
 ## Browser
 
 ```html
 <script src="vue.js"></script>
-<script src="https://unpkg.com/vue-observe-visibility@next/dist/vue-observe-visibility.min.js"></script>
+<script src="https://unpkg.com/vue-observe-visibility/dist/vue-observe-visibility.min.js"></script>
 ```
+
+The plugin should be auto-installed. If not, you can install it manually with the instructions below.
 
 Install all the directives:
 
 ```javascript
-app.use(VueObserveVisibility)
+Vue.use(VueObserveVisibility)
 ```
 
 Use specific directives:
 
 ```javascript
-app.directive('observe-visibility', VueObserveVisibility.ObserveVisibility)
+Vue.directive('observe-visibility', VueObserveVisibility.ObserveVisibility)
 ```
 
 # Usage
@@ -174,7 +178,7 @@ Passing a falsy value to the directive will disable the observer:
 
 ```html
 <div id="app">
-  <button @click="show = !show">Toggle</button>
+  <button @click="toggleShow">Toggle</button>
   <label>
     <input type="checkbox" v-model="isVisible" disabled/> Is visible?
   </label>
@@ -182,22 +186,42 @@ Passing a falsy value to the directive will disable the observer:
 </div>
 
 <script>
-const app = Vue.createApp({
-  data: {
-    show: true,
-    isVisible: true,
-  },
-  methods: {
-    visibilityChanged (isVisible, entry) {
-      this.isVisible = isVisible
-      console.log(entry)
-    },
-  },
+const {
+  ref,
+  createApp,
+  defineComponent
+} = Vue;
+
+const {
+  useToggle
+} = window.VueUse;
+
+const App = defineComponent({
+  name: "App",
+  setup() {
+    const _isVisible = ref(false);
+    const throttle = ref(0);
+    const threshold = ref(0);
+
+    const [show, toggleShow] = useToggle(true);
+
+    function visibilityChanged(isVisible, entry) {
+      _isVisible.value = isVisible;
+      console.log(Math.round(entry.intersectionRatio * 100) + '%')
+    }
+
+    return {
+      show,
+      toggleShow,
+      isVisible: _isVisible,
+      throttle,
+      threshold,
+      visibilityChanged
+    }
+  }
 })
 
-app.use(VueObserveVisibility)
-
-app.mount('#app')
+createApp(App).use(VueObserveVisibility).mount("#app");
 </script>
 ```
 
