@@ -51,6 +51,13 @@ class VisibilityState {
 			}
 
 			if (this.callback) {
+				if (Array.isArray(this.threshold)) {
+					const result = entry.isIntersecting
+					this.oldResult = result
+					this.callback(result, entry)
+					return
+				}
+
 				// Use isIntersecting if possible because browsers can report isIntersecting as true, but intersectionRatio as 0, when something very slowly enters the viewport.
 				const result = entry.isIntersecting && entry.intersectionRatio >= this.threshold
 				if (result === this.oldResult) return
