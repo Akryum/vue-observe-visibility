@@ -9,7 +9,7 @@ class VisibilityState {
 	}
 
 	get threshold () {
-		return this.options.intersection && typeof this.options.intersection.threshold === 'number' ? this.options.intersection.threshold : 0
+		return this.options.intersection?.threshold || 0
 	}
 
 	createObserver (options, vnode) {
@@ -51,9 +51,12 @@ class VisibilityState {
 			}
 
 			if (this.callback) {
-				// Use isIntersecting if possible because browsers can report isIntersecting as true, but intersectionRatio as 0, when something very slowly enters the viewport.
-				const result = entry.isIntersecting && entry.intersectionRatio >= this.threshold
-				if (result === this.oldResult) return
+				let result = entry.isIntersecting
+				if (!Array.isArray(this.threshold)) {
+					// Use isIntersecting if possible because browsers can report isIntersecting as true, but intersectionRatio as 0, when something very slowly enters the viewport.
+					result &&= entry.intersectionRatio >= this.threshold
+					if (result === this.oldResult) return
+				}
 				this.oldResult = result
 				this.callback(result, entry)
 			}
